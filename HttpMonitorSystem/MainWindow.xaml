@@ -1,0 +1,65 @@
+﻿<Window x:Class="HttpMonitorSystem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="HTTP Monitor System" Height="750" Width="1100">
+
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" BorderBrush="#4CAF50" BorderThickness="2" CornerRadius="8" Margin="5" Padding="10">
+            <StackPanel>
+                <TextBlock Text="HTTP SERVER" FontSize="16" FontWeight="Bold" Foreground="#4CAF50" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,5">
+                    <TextBlock Text="Port:" VerticalAlignment="Center" Width="50"/>
+                    <TextBox x:Name="PortBox" Text="8080" Width="80" Margin="5,0"/>
+                    <Button x:Name="StartServerBtn" Content="Start" Click="StartServer_Click" Background="#4CAF50" Foreground="White" Margin="5,0" Padding="10,5"/>
+                    <Button x:Name="StopServerBtn" Content="Stop" Click="StopServer_Click" IsEnabled="False" Background="#F44336" Foreground="White" Padding="10,5"/>
+                </StackPanel>
+
+                <TextBlock Text="Statistics" FontWeight="Bold" Margin="0,10,0,5"/>
+                <TextBlock x:Name="StatsText" Background="#F5F5F5" Padding="8" FontFamily="Consolas"/>
+
+                <TextBlock Text="Request Logs" FontWeight="Bold" Margin="0,10,0,5"/>
+                <ListView x:Name="LogsList" Height="250" FontFamily="Consolas" FontSize="11">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="Time" Width="120" DisplayMemberBinding="{Binding Timestamp}"/>
+                            <GridViewColumn Header="Method" Width="60" DisplayMemberBinding="{Binding Method}"/>
+                            <GridViewColumn Header="URL" Width="200" DisplayMemberBinding="{Binding Url}"/>
+                            <GridViewColumn Header="Status" Width="60" DisplayMemberBinding="{Binding StatusCode}"/>
+                            <GridViewColumn Header="Time(ms)" Width="70" DisplayMemberBinding="{Binding ProcessingTimeMs}"/>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+
+                <Button x:Name="SaveLogsBtn" Content="Save Logs to File" Click="SaveLogs_Click" Margin="0,10" Background="#2196F3" Foreground="White" Padding="10,5"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" BorderBrush="#2196F3" BorderThickness="2" CornerRadius="8" Margin="5" Padding="10">
+            <StackPanel>
+                <TextBlock Text="HTTP CLIENT" FontSize="16" FontWeight="Bold" Foreground="#2196F3" Margin="0,0,0,10"/>
+
+                <TextBlock Text="URL:" FontWeight="Bold"/>
+                <TextBox x:Name="ClientUrl" Text="http://localhost:8080/message" Margin="0,5"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,10">
+                    <RadioButton x:Name="GetMethod" Content="GET" GroupName="Method" IsChecked="True" Margin="0,0,20,0"/>
+                    <RadioButton x:Name="PostMethod" Content="POST" GroupName="Method"/>
+                </StackPanel>
+
+                <TextBlock Text="JSON Body (for POST):" FontWeight="Bold"/>
+                <TextBox x:Name="JsonBody" Text="{}{'message':'Hello from client'}" Height="80" TextWrapping="Wrap" Margin="0,5" AcceptsReturn="True"/>
+
+                <Button x:Name="SendRequestBtn" Content="Send Request" Click="SendRequest_Click" Margin="0,10" Background="#FF9800" Foreground="White" Padding="10,5" FontWeight="Bold"/>
+
+                <TextBlock Text="Server Response:" FontWeight="Bold" Margin="0,10,0,5"/>
+                <TextBox x:Name="ResponseBox" TextWrapping="Wrap" Height="150" IsReadOnly="True" Background="#F5F5F5" FontFamily="Consolas" VerticalScrollBarVisibility="Auto"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
